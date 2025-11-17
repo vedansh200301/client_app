@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl,
+    paddingTop: theme.spacing.xl * 1.5,
   },
   card: {
   },
