@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
 import { buyerQuotations } from '../../data/mockData';
+import { BuyerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 
 const sampleMessages = [
@@ -11,8 +13,16 @@ const sampleMessages = [
   { id: '3', author: 'You', message: 'Great, keeping price at ₹345 works.', align: 'right' as const },
 ];
 
-export const BuyerQuotationDetailScreen = () => {
-  const quotation = buyerQuotations?.[0];
+type Props = NativeStackScreenProps<BuyerStackParamList, 'BuyerQuotationDetail'>;
+
+export const BuyerQuotationDetailScreen = ({ route }: Props) => {
+  const quotation = useMemo(() => {
+    if (!buyerQuotations) return undefined;
+    if (route.params?.quotationId) {
+      return buyerQuotations.find((quote) => quote.id === route.params?.quotationId);
+    }
+    return buyerQuotations[0];
+  }, [route.params?.quotationId]);
 
   if (!quotation) {
     return (
@@ -40,8 +50,17 @@ export const BuyerQuotationDetailScreen = () => {
         </View>
         <Text style={styles.status}>Status: {quotation.status}</Text>
         <View style={styles.actions}>
-          <GlassButton label="Accept Counter" onPress={() => {}} style={styles.actionButton} />
-          <GlassButton label="Reject" variant="secondary" onPress={() => {}} style={styles.actionButton} />
+          <GlassButton
+            label="Accept Counter"
+            onPress={() => Alert.alert('Accepted', 'You accepted the seller counter offer.')}
+            style={styles.actionButton}
+          />
+          <GlassButton
+            label="Reject"
+            variant="secondary"
+            onPress={() => Alert.alert('Rejected', 'You rejected this quotation.')}
+            style={styles.actionButton}
+          />
         </View>
       </GlassCard>
 
@@ -56,7 +75,12 @@ export const BuyerQuotationDetailScreen = () => {
             <Text style={styles.messageText}>{msg.message}</Text>
           </View>
         ))}
-        <GlassButton label="AI Suggest Reply" variant="secondary" onPress={() => {}} style={styles.aiButton} />
+        <GlassButton
+          label="AI Suggest Reply"
+          variant="secondary"
+          onPress={() => Alert.alert('AI', 'This is where an AI suggestion would appear.')}
+          style={styles.aiButton}
+        />
       </GlassCard>
     </ScrollView>
   );
@@ -70,7 +94,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   card: {
   },

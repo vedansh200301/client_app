@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { theme } from '../theme';
 import { GlassCard } from './GlassCard';
 
@@ -10,30 +10,33 @@ type Props = {
   status?: string | null;
   location?: string | null;
   price?: string | null;
+  onPress?: () => void;
 };
 
-export const QuoteCard = ({ id, counterpart, product, quantity, status, location, price }: Props) => {
+export const QuoteCard = ({ id, counterpart, product, quantity, status, location, price, onPress }: Props) => {
   const normalizedStatus = status?.replace('_', ' ') ?? 'pending';
 
   return (
-    <GlassCard style={styles.card}>
-      <View style={styles.header}>
-        <Text style={styles.identifier}>{id ?? 'Q-—'}</Text>
-        <Text style={[styles.badge, statusStyles[status ?? ''] || styles.defaultBadge]} numberOfLines={1}>
-          {normalizedStatus}
+    <Pressable onPress={onPress} disabled={!onPress}>
+      <GlassCard style={styles.card}>
+        <View style={styles.header}>
+          <Text style={styles.identifier}>{id ?? 'Q-—'}</Text>
+          <Text style={[styles.badge, statusStyles[status ?? ''] || styles.defaultBadge]} numberOfLines={1}>
+            {normalizedStatus}
+          </Text>
+        </View>
+        <Text style={styles.title} numberOfLines={1}>
+          {counterpart ?? 'Counterpart TBD'}
         </Text>
-      </View>
-      <Text style={styles.title} numberOfLines={1}>
-        {counterpart ?? 'Counterpart TBD'}
-      </Text>
-      <Text style={styles.product} numberOfLines={1}>
-        {product ?? 'Product TBD'} • Qty: {quantity ?? '—'}
-      </Text>
-      <Text style={styles.location} numberOfLines={1}>
-        {location ?? 'Location pending'}
-      </Text>
-      <Text style={styles.price}>{price ?? 'Awaiting pricing'}</Text>
-    </GlassCard>
+        <Text style={styles.product} numberOfLines={1}>
+          {product ?? 'Product TBD'} • Qty: {quantity ?? '—'}
+        </Text>
+        <Text style={styles.location} numberOfLines={1}>
+          {location ?? 'Location pending'}
+        </Text>
+        <Text style={styles.price}>{price ?? 'Awaiting pricing'}</Text>
+      </GlassCard>
+    </Pressable>
   );
 };
 

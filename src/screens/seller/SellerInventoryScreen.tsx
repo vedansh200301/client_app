@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Pressable, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
 import { sellerInventory } from '../../data/mockData';
@@ -32,7 +32,11 @@ export const SellerInventoryScreen = () => {
         ))}
       </View>
 
-      <GlassButton label="Add Product" onPress={() => {}} style={styles.addButton} />
+      <GlassButton
+        label="Add Product"
+        onPress={() => Alert.alert('Add Product', `Opening product form for ${activeLocation}`)}
+        style={styles.addButton}
+      />
 
       {inventory.length === 0 ? (
         <Text style={styles.emptyState}>No products configured for this location.</Text>
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   locationRow: {
     flexDirection: 'row',

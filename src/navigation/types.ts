@@ -21,11 +21,11 @@ export type SellerTabParamList = {
 
 export type BuyerStackParamList = {
   BuyerTabs: undefined;
-  BuyerSellerDetail: undefined;
-  BuyerQuotationDetail: undefined;
+  BuyerSellerDetail: { sellerId: string } | undefined;
+  BuyerQuotationDetail: { quotationId: string } | undefined;
 };
 
 export type SellerStackParamList = {
   SellerTabs: undefined;
-  SellerQuotationDetail: undefined;
+  SellerQuotationDetail: { quotationId: string } | undefined;
 };

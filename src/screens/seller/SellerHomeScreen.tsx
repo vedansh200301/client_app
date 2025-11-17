@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   statsRow: {
     flexDirection: 'row',

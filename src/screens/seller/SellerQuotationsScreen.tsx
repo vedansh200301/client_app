@@ -1,10 +1,15 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { QuoteCard } from '../../components/QuoteCard';
 import { sellerQuotations } from '../../data/mockData';
+import { SellerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 
+type Navigation = NavigationProp<SellerStackParamList>;
+
 export const SellerQuotationsScreen = () => {
+  const navigation = useNavigation<Navigation>();
   const quotations = Array.isArray(sellerQuotations) ? sellerQuotations : [];
 
   return (
@@ -22,6 +27,7 @@ export const SellerQuotationsScreen = () => {
             status={quote.status}
             location={quote.location}
             price={quote.price}
+            onPress={() => navigation.navigate('SellerQuotationDetail', { quotationId: quote.id })}
           />
         ))
       )}
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.lg,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   emptyState: {
     color: theme.colors.muted,

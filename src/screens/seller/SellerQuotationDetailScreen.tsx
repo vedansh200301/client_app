@@ -1,12 +1,22 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useMemo } from 'react';
+import { ScrollView, StyleSheet, View, Text, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
 import { sellerQuotations } from '../../data/mockData';
+import { SellerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 
-export const SellerQuotationDetailScreen = () => {
-  const quote = sellerQuotations?.[0];
+type Props = NativeStackScreenProps<SellerStackParamList, 'SellerQuotationDetail'>;
+
+export const SellerQuotationDetailScreen = ({ route }: Props) => {
+  const quote = useMemo(() => {
+    if (!sellerQuotations) return undefined;
+    if (route.params?.quotationId) {
+      return sellerQuotations.find((entry) => entry.id === route.params?.quotationId);
+    }
+    return sellerQuotations[0];
+  }, [route.params?.quotationId]);
 
   if (!quote) {
     return (
@@ -39,12 +49,32 @@ export const SellerQuotationDetailScreen = () => {
         <Text style={styles.value}>{quote.price}</Text>
 
         <Text style={[styles.label, { marginTop: theme.spacing.md }]}>Fulfil from</Text>
-        <GlassButton label="Main Yard" variant="secondary" onPress={() => {}} style={styles.dropdownReplacement} />
+        <GlassButton
+          label="Main Yard"
+          variant="secondary"
+          onPress={() => Alert.alert('Location selected', 'Main Yard will fulfil this request.')}
+          style={styles.dropdownReplacement}
+        />
 
         <View style={styles.actions}>
-          <GlassButton label="Accept" variant="primary" style={styles.actionButton} onPress={() => {}} />
-          <GlassButton label="Reject" variant="secondary" style={styles.actionButton} onPress={() => {}} />
-          <GlassButton label="Counter" variant="danger" style={styles.actionButton} onPress={() => {}} />
+          <GlassButton
+            label="Accept"
+            variant="primary"
+            style={styles.actionButton}
+            onPress={() => Alert.alert('Accepted', 'Quotation accepted successfully.')}
+          />
+          <GlassButton
+            label="Reject"
+            variant="secondary"
+            style={styles.actionButton}
+            onPress={() => Alert.alert('Rejected', 'Quotation rejected.')}
+          />
+          <GlassButton
+            label="Counter"
+            variant="danger"
+            style={styles.actionButton}
+            onPress={() => Alert.alert('Counter Sent', 'Counter offer sent to buyer.')}
+          />
         </View>
       </GlassCard>
     </ScrollView>
@@ -59,7 +89,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   card: {
     marginBottom: theme.spacing.md,

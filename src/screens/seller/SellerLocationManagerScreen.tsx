@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
 import { buyerLocations } from '../../data/mockData';
@@ -18,11 +18,15 @@ export const SellerLocationManagerScreen = () => {
             <Text style={styles.coverage}>Coverage radius: 25 km</Text>
           </View>
           <View style={styles.actions}>
-            <GlassButton label="Edit" onPress={() => {}} style={styles.button} />
+            <GlassButton
+              label="Edit"
+              onPress={() => Alert.alert('Edit Location', `Editing ${location.label}`)}
+              style={styles.button}
+            />
             <GlassButton
               label="Deactivate"
               variant="secondary"
-              onPress={() => {}}
+              onPress={() => Alert.alert('Deactivate', `${location.label} has been deactivated.`)}
               style={[styles.button, styles.lastButton]}
             />
           </View>
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   card: {
     marginBottom: theme.spacing.md,

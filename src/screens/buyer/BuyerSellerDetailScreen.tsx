@@ -1,9 +1,11 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
 import { SectionHeader } from '../../components/SectionHeader';
 import { sellersNearBuyer } from '../../data/mockData';
+import { BuyerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 
 const fallbackInventory = [
@@ -12,8 +14,10 @@ const fallbackInventory = [
   { id: 'prod-3', name: 'TMT Bars 8mm', meta: '₹68/kg • Min order 1 ton' },
 ];
 
-export const BuyerSellerDetailScreen = () => {
-  const seller = sellersNearBuyer?.[0];
+type Props = NativeStackScreenProps<BuyerStackParamList, 'BuyerSellerDetail'>;
+
+export const BuyerSellerDetailScreen = ({ route }: Props) => {
+  const seller = sellersNearBuyer?.find((entry) => entry.id === route.params?.sellerId) ?? sellersNearBuyer?.[0];
   const inventory = seller ? fallbackInventory : [];
 
   if (!seller) {
@@ -33,7 +37,12 @@ export const BuyerSellerDetailScreen = () => {
         <Text style={styles.subtitle}>
           {seller.distance} km • Delivers within {seller.coverage} km
         </Text>
-        <GlassButton label="View on Map" variant="secondary" style={styles.mapButton} />
+        <GlassButton
+          label="View on Map"
+          variant="secondary"
+          style={styles.mapButton}
+          onPress={() => Alert.alert('Map', 'Map view coming soon.')}
+        />
       </GlassCard>
 
       <SectionHeader title="Inventory at this location" />
@@ -43,7 +52,7 @@ export const BuyerSellerDetailScreen = () => {
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.productMeta}>{item.meta}</Text>
           </View>
-          <GlassButton label="Quote" onPress={() => {}} style={styles.singleButton} />
+          <GlassButton label="Quote" onPress={() => Alert.alert('Quote', `Requested quote for ${item.name}`)} style={styles.singleButton} />
         </GlassCard>
       ))}
     </ScrollView>
@@ -58,7 +67,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl * 1.5,
+    paddingTop: theme.spacing.xl * 2.25,
   },
   header: {
     marginBottom: theme.spacing.lg,

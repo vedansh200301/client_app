@@ -1,6 +1,8 @@
+export type LatLng = { lat: number; lng: number };
+
 export const buyerLocations = [
-  { id: 'loc-1', label: 'Site A - Gurgaon', address: 'Gurgaon, Haryana', isDefault: true },
-  { id: 'loc-2', label: 'Warehouse - Noida', address: 'Sector 62, Noida', isDefault: false },
+  { id: 'loc-1', label: 'Site A - Gurgaon', address: 'Gurgaon, Haryana', isDefault: true, lat: 28.4595, lng: 77.0266 },
+  { id: 'loc-2', label: 'Warehouse - Noida', address: 'Sector 62, Noida', isDefault: false, lat: 28.6273, lng: 77.3649 },
 ];
 
 export const sellersNearBuyer = [
@@ -12,6 +14,8 @@ export const sellersNearBuyer = [
     highlight: 'OPC 53 Cement',
     price: '₹350/bag',
     availability: 'In stock • Min order 50',
+    lat: 28.467,
+    lng: 77.047,
   },
   {
     id: 'seller-2',
@@ -21,6 +25,8 @@ export const sellersNearBuyer = [
     highlight: 'TMT Bars 8mm',
     price: '₹68/kg',
     availability: 'Delivery in 1 day',
+    lat: 28.521,
+    lng: 77.071,
   },
   {
     id: 'seller-3',
@@ -30,6 +36,8 @@ export const sellersNearBuyer = [
     highlight: 'River Sand',
     price: '₹950/ton',
     availability: 'Low stock',
+    lat: 28.43,
+    lng: 77.03,
   },
 ];
 
