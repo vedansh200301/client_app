@@ -37,7 +37,7 @@ export const sellersNearBuyer = [
         unit: 'bag',
         availability: '500 bags available',
         minOrder: '50 bags',
-        imageUrl: 'https://images.unsplash.com/photo-1523419409543-0c1df022bddb?auto=format&fit=crop&w=900&q=60',
+        imageUrl: 'https://images.unsplash.com/photo-1600607687920-4e2b6f98d1f0?auto=format&fit=crop&w=900&q=60',
       },
       {
         id: 'prod-cement-2',
@@ -47,7 +47,7 @@ export const sellersNearBuyer = [
         unit: 'bag',
         availability: '300 bags available',
         minOrder: '40 bags',
-        imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=60',
+        imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=60',
       },
       {
         id: 'prod-aggregate-1',
@@ -57,7 +57,7 @@ export const sellersNearBuyer = [
         unit: 'ton',
         availability: '80 tons available',
         minOrder: '10 tons',
-        imageUrl: 'https://images.unsplash.com/photo-1508898578281-774ac4893c0f?auto=format&fit=crop&w=900&q=60',
+        imageUrl: 'https://images.unsplash.com/photo-1445510861639-5651173bc5d5?auto=format&fit=crop&w=900&q=60',
       },
     ],
   },
