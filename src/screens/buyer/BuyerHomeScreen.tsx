@@ -182,6 +182,7 @@ export const BuyerHomeScreen = () => {
             highlight={seller.highlight}
             price={seller.price}
             availability={seller.availability}
+            rating={seller.rating}
             onPress={() => handleSellerPress(seller)}
             onQuote={() => handleQuotePress(seller)}
           />

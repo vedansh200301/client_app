@@ -11,9 +11,9 @@ export const palette = {
 
 export const theme = {
   colors: {
-    background: palette.mint,
-    surface: palette.white,
-    card: palette.white,
+    background: '#B8F2CC',
+    surface: 'rgba(255,255,255,0.95)',
+    card: 'rgba(255,255,255,0.9)',
     textPrimary: palette.midnight,
     textSecondary: palette.deepTeal,
     muted: '#1F6A7C',
@@ -22,8 +22,8 @@ export const theme = {
     highlight: palette.aqua,
     chipBackground: 'rgba(9, 209, 199, 0.18)',
     mapBackground: palette.cyan,
-    glassBorder: 'rgba(255, 255, 255, 0.75)',
-    glassBackground: 'rgba(255, 255, 255, 0.3)',
+    glassBorder: 'rgba(255, 255, 255, 0.8)',
+    glassBackground: 'rgba(255, 255, 255, 0.35)',
     sellerSurface: 'rgba(21, 145, 155, 0.7)',
     sellerText: '#E0FBFF',
     tabBackground: palette.midnight,

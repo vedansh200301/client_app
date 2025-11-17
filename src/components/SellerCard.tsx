@@ -11,6 +11,7 @@ type Props = {
   highlight?: string | null;
   price?: string | null;
   availability?: string | null;
+  rating?: number | null;
   onPress?: () => void;
   onQuote?: () => void;
 };
@@ -22,6 +23,7 @@ export const SellerCard = ({
   highlight,
   price,
   availability,
+  rating,
   onPress,
   onQuote,
 }: Props) => {
@@ -39,6 +41,21 @@ export const SellerCard = ({
           {safeName}
         </Text>
         <Text style={styles.distance}>{safeDistance}</Text>
+      </View>
+      <View style={styles.ratingRow}>
+        {rating ? (
+          <>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Ionicons
+                key={index}
+                name={index < Math.round(rating) ? 'star' : 'star-outline'}
+                size={14}
+                color={theme.colors.highlight}
+              />
+            ))}
+            <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
+          </>
+        ) : null}
       </View>
       <View style={styles.badgeRow}>
         <View style={styles.badge}>
@@ -78,6 +95,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  ratingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    marginTop: theme.spacing.xs,
+  },
+  ratingText: {
+    fontSize: 12,
+    color: theme.colors.textSecondary,
+    marginLeft: theme.spacing.xs,
+    fontWeight: '600',
   },
   name: {
     fontSize: 16,

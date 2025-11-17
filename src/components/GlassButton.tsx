@@ -14,16 +14,16 @@ type Props = {
 
 const variantStyles: Record<Variant, { background: string; textColor: string; borderColor?: string }> = {
   primary: {
-    background: 'rgba(9, 209, 199, 0.85)',
+    background: 'rgba(21, 145, 155, 0.65)',
     textColor: theme.colors.surface,
   },
   secondary: {
-    background: 'rgba(70, 223, 177, 0.2)',
+    background: 'rgba(255, 255, 255, 0.18)',
     textColor: theme.colors.textSecondary,
     borderColor: theme.colors.highlight,
   },
   danger: {
-    background: 'rgba(255, 119, 119, 0.45)',
+    background: 'rgba(255, 119, 119, 0.35)',
     textColor: theme.colors.textPrimary,
   },
 };

@@ -3,22 +3,17 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
+import { ProductCard } from '../../components/ProductCard';
 import { SectionHeader } from '../../components/SectionHeader';
 import { sellersNearBuyer } from '../../data/mockData';
 import { BuyerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 
-const fallbackInventory = [
-  { id: 'prod-1', name: 'OPC 53 Cement', meta: '₹350/bag • Min order 50' },
-  { id: 'prod-2', name: 'River Sand', meta: '₹950/ton • Min order 10 tons' },
-  { id: 'prod-3', name: 'TMT Bars 8mm', meta: '₹68/kg • Min order 1 ton' },
-];
-
 type Props = NativeStackScreenProps<BuyerStackParamList, 'BuyerSellerDetail'>;
 
 export const BuyerSellerDetailScreen = ({ route }: Props) => {
   const seller = sellersNearBuyer?.find((entry) => entry.id === route.params?.sellerId) ?? sellersNearBuyer?.[0];
-  const inventory = seller ? fallbackInventory : [];
+  const inventory = seller?.products ?? [];
 
   if (!seller) {
     return (
@@ -46,15 +41,25 @@ export const BuyerSellerDetailScreen = ({ route }: Props) => {
       </GlassCard>
 
       <SectionHeader title="Inventory at this location" />
-      {inventory.map((item) => (
-        <GlassCard key={item.id} style={styles.productCard}>
-          <View>
-            <Text style={styles.productName}>{item.name}</Text>
-            <Text style={styles.productMeta}>{item.meta}</Text>
-          </View>
-          <GlassButton label="Quote" onPress={() => Alert.alert('Quote', `Requested quote for ${item.name}`)} style={styles.singleButton} />
+      {inventory.length === 0 ? (
+        <GlassCard style={styles.productCard}>
+          <Text style={styles.productName}>No catalog items yet</Text>
+          <Text style={styles.productMeta}>Seller has not shared inventory.</Text>
         </GlassCard>
-      ))}
+      ) : (
+        inventory.map((item) => (
+          <ProductCard
+            key={item.id}
+            name={item.name}
+            description={item.description}
+            price={`${item.price} / ${item.unit}`}
+            availability={item.availability}
+            minOrder={item.minOrder}
+            imageUrl={item.imageUrl}
+            onPress={() => Alert.alert('Quote', `Requested quote for ${item.name}`)}
+          />
+        ))
+      )}
     </ScrollView>
   );
 };
@@ -93,10 +98,7 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
   },
   productMeta: {
-    color: theme.colors.muted,
-  },
-  singleButton: {
-    marginTop: theme.spacing.sm,
+    color: theme.colors.textSecondary,
   },
   emptyContainer: {
     flex: 1,

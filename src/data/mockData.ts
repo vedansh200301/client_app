@@ -1,5 +1,16 @@
 export type LatLng = { lat: number; lng: number };
 
+export type SellerProduct = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  unit: string;
+  availability: string;
+  minOrder: string;
+  imageUrl: string;
+};
+
 export const buyerLocations = [
   { id: 'loc-1', label: 'Site A - Gurgaon', address: 'Gurgaon, Haryana', isDefault: true, lat: 28.4595, lng: 77.0266 },
   { id: 'loc-2', label: 'Warehouse - Noida', address: 'Sector 62, Noida', isDefault: false, lat: 28.6273, lng: 77.3649 },
@@ -16,6 +27,39 @@ export const sellersNearBuyer = [
     availability: 'In stock • Min order 50',
     lat: 28.467,
     lng: 77.047,
+    rating: 4.8,
+    products: [
+      {
+        id: 'prod-cement-1',
+        name: 'OPC 53 Cement Premium',
+        description: 'High strength cement ideal for RCC and commercial projects.',
+        price: '₹350/bag',
+        unit: 'bag',
+        availability: '500 bags available',
+        minOrder: '50 bags',
+        imageUrl: 'https://images.unsplash.com/photo-1523419409543-0c1df022bddb?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-cement-2',
+        name: 'Rapid Set Cement',
+        description: 'Fast curing cement for schedule-critical pours.',
+        price: '₹380/bag',
+        unit: 'bag',
+        availability: '300 bags available',
+        minOrder: '40 bags',
+        imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-aggregate-1',
+        name: 'River Sand (Washed)',
+        description: 'Clean river sand for plastering and masonry work.',
+        price: '₹950/ton',
+        unit: 'ton',
+        availability: '80 tons available',
+        minOrder: '10 tons',
+        imageUrl: 'https://images.unsplash.com/photo-1508898578281-774ac4893c0f?auto=format&fit=crop&w=900&q=60',
+      },
+    ],
   },
   {
     id: 'seller-2',
@@ -27,6 +71,39 @@ export const sellersNearBuyer = [
     availability: 'Delivery in 1 day',
     lat: 28.521,
     lng: 77.071,
+    rating: 4.5,
+    products: [
+      {
+        id: 'prod-steel-1',
+        name: 'TMT Bars 8mm',
+        description: 'IS 1786 Fe 500 grade thermo-mechanically treated bars.',
+        price: '₹68/kg',
+        unit: 'kg',
+        availability: '2.5 tons available',
+        minOrder: '1 ton',
+        imageUrl: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-steel-2',
+        name: 'GI Wire Bundles',
+        description: 'Galvanised binding wire for versatile site use.',
+        price: '₹78/kg',
+        unit: 'kg',
+        availability: '1.2 tons available',
+        minOrder: '100 kg',
+        imageUrl: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-steel-3',
+        name: 'Steel Plates 12mm',
+        description: 'Hot-rolled plates for fabrication and base plates.',
+        price: '₹52/kg',
+        unit: 'kg',
+        availability: '3 tons available',
+        minOrder: '500 kg',
+        imageUrl: 'https://images.unsplash.com/photo-1474404674125-62c2f84be0ce?auto=format&fit=crop&w=900&q=60',
+      },
+    ],
   },
   {
     id: 'seller-3',
@@ -38,6 +115,39 @@ export const sellersNearBuyer = [
     availability: 'Low stock',
     lat: 28.43,
     lng: 77.03,
+    rating: 4.2,
+    products: [
+      {
+        id: 'prod-sand-1',
+        name: 'Coarse Aggregate 20mm',
+        description: 'Angular crushed stone for structural concrete mixes.',
+        price: '₹820/ton',
+        unit: 'ton',
+        availability: '110 tons available',
+        minOrder: '15 tons',
+        imageUrl: 'https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-sand-2',
+        name: 'Manufactured Sand',
+        description: 'Consistent M-sand for plastering and block work.',
+        price: '₹720/ton',
+        unit: 'ton',
+        availability: '95 tons available',
+        minOrder: '10 tons',
+        imageUrl: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=60',
+      },
+      {
+        id: 'prod-sand-3',
+        name: 'Ready Mix Concrete Grade M30',
+        description: 'On-demand batching with pump included.',
+        price: '₹5,800/cubic m',
+        unit: 'm³',
+        availability: 'Made-to-order',
+        minOrder: '20 m³',
+        imageUrl: 'https://images.unsplash.com/photo-1508898578281-774ac4893c0f?auto=format&fit=crop&w=900&q=60',
+      },
+    ],
   },
 ];
 
