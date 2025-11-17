@@ -23,6 +23,7 @@ export type BuyerStackParamList = {
   BuyerTabs: undefined;
   BuyerSellerDetail: { sellerId: string } | undefined;
   BuyerQuotationDetail: { quotationId: string } | undefined;
+  BuyerChat: { threadId: string };
 };
 
 export type SellerStackParamList = {

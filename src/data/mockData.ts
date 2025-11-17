@@ -174,18 +174,33 @@ export const buyerQuotations = [
 
 export const buyerMessages = [
   {
-    id: 'msg-1',
+    id: 'thread-abc',
     seller: 'ABC Traders',
     lastMessage: 'Delivery possible by Monday. Confirm?',
     timestamp: '2m ago',
+    unreadCount: 2,
+    messages: [
+      { id: 'm1', sender: 'seller', text: 'Delivery possible by Monday. Confirm?', time: '2m ago' },
+      { id: 'm2', sender: 'buyer', text: 'Need it by 10 AM, please confirm driver details.', time: 'Just now' },
+    ],
   },
   {
-    id: 'msg-2',
+    id: 'thread-metro',
     seller: 'Metro Steel Depot',
     lastMessage: 'Sharing updated TMT rate card.',
     timestamp: '30m ago',
+    unreadCount: 0,
+    messages: [
+      { id: 'm1', sender: 'seller', text: 'Sharing updated TMT rate card.', time: '30m ago' },
+      { id: 'm2', sender: 'buyer', text: 'Received. Will review with procurement.', time: '25m ago' },
+    ],
   },
 ];
+
+export const sellerNotifications = {
+  unreadChats: 3,
+  unreadAlerts: 4,
+};
 
 export const sellerStats = [
   { label: 'New Quotations Today', value: '03' },

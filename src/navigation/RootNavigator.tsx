@@ -9,6 +9,7 @@ import { BuyerMessagesScreen } from '../screens/buyer/BuyerMessagesScreen';
 import { BuyerProfileScreen } from '../screens/buyer/BuyerProfileScreen';
 import { BuyerQuotationsScreen } from '../screens/buyer/BuyerQuotationsScreen';
 import { BuyerQuotationDetailScreen } from '../screens/buyer/BuyerQuotationDetailScreen';
+import { BuyerChatScreen } from '../screens/buyer/BuyerChatScreen';
 import { BuyerSellerDetailScreen } from '../screens/buyer/BuyerSellerDetailScreen';
 import { RoleSelectScreen } from '../screens/auth/RoleSelectScreen';
 import { SellerHomeScreen } from '../screens/seller/SellerHomeScreen';
@@ -135,6 +136,7 @@ const BuyerStackNavigator = () => (
       component={BuyerQuotationDetailScreen}
       options={{ title: 'Quotation' }}
     />
+    <BuyerStack.Screen name="BuyerChat" component={BuyerChatScreen} options={{ title: 'Chat' }} />
   </BuyerStack.Navigator>
 );
 

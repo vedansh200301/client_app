@@ -1,15 +1,26 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { GlassCard } from '../../components/GlassCard';
 import { SectionHeader } from '../../components/SectionHeader';
 import { StatCard } from '../../components/StatCard';
-import { sellerActivities, sellerStats } from '../../data/mockData';
+import { sellerActivities, sellerStats, sellerNotifications } from '../../data/mockData';
 import { theme } from '../../theme';
 
 export const SellerHomeScreen = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <SectionHeader title="Overview" />
+      <View style={styles.notificationRow}>
+        <View style={styles.notificationBadge}>
+          <Ionicons name="notifications-outline" size={18} color={theme.colors.surface} />
+          <Text style={styles.notificationText}>{sellerNotifications.unreadAlerts} Alerts</Text>
+        </View>
+        <View style={styles.notificationBadge}>
+          <Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.colors.surface} />
+          <Text style={styles.notificationText}>{sellerNotifications.unreadChats} Chats</Text>
+        </View>
+      </View>
       <View style={styles.statsRow}>
         {sellerStats.map((stat, index) => (
           <StatCard
@@ -49,6 +60,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.lg,
+  },
+  notificationRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
+    gap: theme.spacing.md,
+  },
+  notificationBadge: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.tabBackground,
+    borderRadius: theme.radius.md,
+    paddingVertical: theme.spacing.sm,
+    gap: theme.spacing.xs,
+  },
+  notificationText: {
+    color: theme.colors.surface,
+    fontWeight: '600',
   },
   card: {
     marginBottom: theme.spacing.md,
