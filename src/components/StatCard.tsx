@@ -7,18 +7,19 @@ type Props = {
   value?: string;
   subtext?: string;
   style?: StyleProp<ViewStyle>;
+  variant?: 'light' | 'ocean';
 };
 
-export const StatCard = ({ label, value, subtext, style }: Props) => (
-  <GlassCard style={[styles.card, style]}>
-    <Text style={styles.label} numberOfLines={1}>
+export const StatCard = ({ label, value, subtext, style, variant = 'light' }: Props) => (
+  <GlassCard style={[styles.card, style]} variant={variant}>
+    <Text style={[styles.label, variant === 'ocean' && styles.labelOcean]} numberOfLines={1}>
       {label ?? '—'}
     </Text>
-    <Text style={styles.value} numberOfLines={1}>
+    <Text style={[styles.value, variant === 'ocean' && styles.valueOcean]} numberOfLines={1}>
       {value ?? '0'}
     </Text>
     {subtext ? (
-      <Text style={styles.subtext} numberOfLines={1}>
+      <Text style={[styles.subtext, variant === 'ocean' && styles.valueOcean]} numberOfLines={1}>
         {subtext}
       </Text>
     ) : null}
@@ -43,5 +44,11 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.xs,
     color: theme.colors.textSecondary,
     fontSize: 12,
+  },
+  labelOcean: {
+    color: theme.colors.sellerText,
+  },
+  valueOcean: {
+    color: theme.colors.sellerText,
   },
 });

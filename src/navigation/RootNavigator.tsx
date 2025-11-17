@@ -59,8 +59,13 @@ const BuyerTabsNavigator = () => (
   <BuyerTab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
-      tabBarActiveTintColor: theme.colors.textSecondary,
-      tabBarStyle: { backgroundColor: theme.colors.surface },
+      tabBarActiveTintColor: theme.colors.tabActive,
+      tabBarInactiveTintColor: theme.colors.tabInactive,
+      tabBarStyle: {
+        backgroundColor: theme.colors.tabBackground,
+        borderTopColor: 'transparent',
+      },
+      tabBarLabelStyle: { fontWeight: '600' },
       tabBarIcon: ({ color, size }) => (
         <Ionicons name={iconMap[route.name]} size={size} color={color} />
       ),
@@ -85,8 +90,13 @@ const SellerTabsNavigator = () => (
   <SellerTab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
-      tabBarActiveTintColor: theme.colors.textSecondary,
-      tabBarStyle: { backgroundColor: theme.colors.surface },
+      tabBarActiveTintColor: theme.colors.tabActive,
+      tabBarInactiveTintColor: theme.colors.tabInactive,
+      tabBarStyle: {
+        backgroundColor: theme.colors.tabBackground,
+        borderTopColor: 'transparent',
+      },
+      tabBarLabelStyle: { fontWeight: '600' },
       tabBarIcon: ({ color, size }) => (
         <Ionicons name={iconMap[route.name]} size={size} color={color} />
       ),

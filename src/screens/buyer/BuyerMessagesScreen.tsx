@@ -1,5 +1,6 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { GlassCard } from '../../components/GlassCard';
 import { buyerMessages } from '../../data/mockData';
 import { theme } from '../../theme';
@@ -9,13 +10,19 @@ export const BuyerMessagesScreen = () => {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {buyerMessages.map((thread) => (
         <GlassCard key={thread.id} style={styles.card}>
-          <Text style={styles.title} numberOfLines={1}>
-            {thread.seller}
-          </Text>
+          <View style={styles.titleRow}>
+            <Ionicons name="business-outline" size={16} color={theme.colors.textSecondary} />
+            <Text style={styles.title} numberOfLines={1}>
+              {thread.seller}
+            </Text>
+          </View>
           <Text style={styles.message} numberOfLines={2}>
             {thread.lastMessage}
           </Text>
-          <Text style={styles.timestamp}>{thread.timestamp}</Text>
+          <View style={styles.timeRow}>
+            <Ionicons name="time-outline" size={14} color={theme.colors.muted} />
+            <Text style={styles.timestamp}>{thread.timestamp}</Text>
+          </View>
         </GlassCard>
       ))}
     </ScrollView>
@@ -35,6 +42,11 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: theme.spacing.md,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+  },
   title: {
     fontWeight: '700',
     color: theme.colors.textPrimary,
@@ -43,8 +55,13 @@ const styles = StyleSheet.create({
   message: {
     color: theme.colors.textSecondary,
   },
-  timestamp: {
+  timeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
     marginTop: theme.spacing.xs,
+  },
+  timestamp: {
     color: theme.colors.muted,
     fontSize: 12,
   },

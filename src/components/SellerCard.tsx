@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native';
 import { theme } from '../theme';
 import { GlassButton } from './GlassButton';
@@ -39,6 +40,16 @@ export const SellerCard = ({
         </Text>
         <Text style={styles.distance}>{safeDistance}</Text>
       </View>
+      <View style={styles.badgeRow}>
+        <View style={styles.badge}>
+          <Ionicons name="navigate-outline" size={14} color={theme.colors.textSecondary} />
+          <Text style={styles.badgeText}>{safeDistance}</Text>
+        </View>
+        <View style={styles.badge}>
+          <Ionicons name="shield-checkmark-outline" size={14} color={theme.colors.textSecondary} />
+          <Text style={styles.badgeText}>{coverage ? `${coverage} km radius` : 'Coverage TBD'}</Text>
+        </View>
+      </View>
       <Text style={styles.coverage} numberOfLines={1}>
         {safeCoverage}
       </Text>
@@ -74,6 +85,25 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
   },
   distance: {
+    color: theme.colors.textSecondary,
+    fontWeight: '600',
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: theme.spacing.xs,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.badge,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+    borderRadius: theme.radius.pill,
+    gap: theme.spacing.xs,
+  },
+  badgeText: {
+    fontSize: 12,
     color: theme.colors.textSecondary,
     fontWeight: '600',
   },

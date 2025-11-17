@@ -5,6 +5,7 @@ export const palette = {
   teal: '#15919B',
   deepTeal: '#0C6478',
   midnight: '#213A58',
+  navyGlow: '#14223E',
   white: '#FFFFFF',
 };
 
@@ -23,6 +24,12 @@ export const theme = {
     mapBackground: palette.cyan,
     glassBorder: 'rgba(255, 255, 255, 0.75)',
     glassBackground: 'rgba(255, 255, 255, 0.3)',
+    sellerSurface: 'rgba(21, 145, 155, 0.7)',
+    sellerText: '#E0FBFF',
+    tabBackground: palette.midnight,
+    tabActive: palette.cyan,
+    tabInactive: 'rgba(255,255,255,0.6)',
+    badge: 'rgba(70, 223, 177, 0.25)',
   },
   spacing: {
     xs: 4,

@@ -5,6 +5,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { InfoChip } from '../../components/InfoChip';
+import { FilterDropdown, DropdownOption } from '../../components/FilterDropdown';
 import { LocationPickerModal } from '../../components/LocationPickerModal';
 import { MapSearchArea } from '../../components/MapSearchArea';
 import { SectionHeader } from '../../components/SectionHeader';
@@ -17,16 +18,32 @@ type Navigation = NavigationProp<BuyerStackParamList>;
 type BuyerLocation = typeof buyerLocations[number];
 type Seller = typeof sellersNearBuyer[number];
 
-const categoryOptions = ['All', 'Cement', 'Steel', 'Aggregates'];
-const priceOptions = ['Any', '₹0 - ₹500', '₹500 - ₹1,000'];
-const distanceOptions = ['Any', '5 km', '10 km', '25 km'];
+const categoryOptions: DropdownOption[] = [
+  { label: 'All', value: 'ALL', icon: 'layers-outline' },
+  { label: 'Cement', value: 'cement', icon: 'cube-outline', meta: { keyword: 'cement' } },
+  { label: 'Steel', value: 'steel', icon: 'construct-outline', meta: { keyword: 'steel' } },
+  { label: 'Aggregates', value: 'aggregates', icon: 'prism-outline', meta: { keyword: 'sand' } },
+];
+
+const priceOptions: DropdownOption[] = [
+  { label: 'Any', value: 'ANY', icon: 'cash-outline' },
+  { label: '₹0 - ₹500', value: '0-500', icon: 'cash-outline', meta: { min: 0, max: 500 } },
+  { label: '₹500 - ₹1,000', value: '500-1000', icon: 'cash-outline', meta: { min: 500, max: 1000 } },
+];
+
+const distanceOptions: DropdownOption[] = [
+  { label: 'Any', value: 'ANY', icon: 'navigate-outline' },
+  { label: '5 km', value: '5', icon: 'navigate-outline' },
+  { label: '10 km', value: '10', icon: 'navigate-outline' },
+  { label: '25 km', value: '25', icon: 'navigate-outline' },
+];
 
 export const BuyerHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [priceIndex, setPriceIndex] = useState(0);
-  const [distanceIndex, setDistanceIndex] = useState(0);
+  const [categoryOption, setCategoryOption] = useState<DropdownOption>(categoryOptions[0]);
+  const [priceOption, setPriceOption] = useState<DropdownOption>(priceOptions[0]);
+  const [distanceOption, setDistanceOption] = useState<DropdownOption>(distanceOptions[0]);
   const [customLocation, setCustomLocation] = useState<BuyerLocation | null>(null);
   const [activeLocationId, setActiveLocationId] = useState<string>(
     buyerLocations.find((loc) => loc.isDefault)?.id ?? buyerLocations[0].id,
@@ -54,22 +71,26 @@ export const BuyerHomeScreen = () => {
         seller.highlight.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
-    if (distanceIndex > 0) {
-      const maxDistance = parseFloat(distanceOptions[distanceIndex]);
+    if (categoryOption.value !== 'ALL') {
+      const keyword = categoryOption.meta?.keyword as string | undefined;
+      if (keyword) {
+        collection = collection.filter((seller) => seller.highlight.toLowerCase().includes(keyword));
+      }
+    }
+    if (priceOption.value !== 'ANY') {
+      const min = priceOption.meta?.min ?? 0;
+      const max = priceOption.meta?.max ?? Number.MAX_VALUE;
+      collection = collection.filter((seller) => {
+        const numeric = parseFloat(seller.price.replace(/[^0-9.]/g, ''));
+        return numeric >= min && numeric <= max;
+      });
+    }
+    if (distanceOption.value !== 'ANY') {
+      const maxDistance = parseFloat(distanceOption.value);
       collection = collection.filter((seller) => parseFloat(seller.distance) <= maxDistance);
     }
     return collection;
-  }, [searchQuery, distanceIndex]);
-
-  const cycleFilter = (type: 'category' | 'price' | 'distance') => {
-    if (type === 'category') {
-      setCategoryIndex((prev) => (prev + 1) % categoryOptions.length);
-    } else if (type === 'price') {
-      setPriceIndex((prev) => (prev + 1) % priceOptions.length);
-    } else {
-      setDistanceIndex((prev) => (prev + 1) % distanceOptions.length);
-    }
-  };
+  }, [searchQuery, categoryOption, priceOption, distanceOption]);
 
   const handleUseCurrentLocation = async () => {
     try {
@@ -141,18 +162,9 @@ export const BuyerHomeScreen = () => {
           {locationLoading ? <ActivityIndicator size="small" color={theme.colors.textSecondary} /> : null}
         </View>
         <View style={styles.filterRow}>
-          <Pressable style={styles.filterChip} onPress={() => cycleFilter('category')}>
-            <Text style={styles.filterText}>Category: {categoryOptions[categoryIndex]}</Text>
-            <Ionicons name="chevron-down" size={16} color={theme.colors.textSecondary} />
-          </Pressable>
-          <Pressable style={styles.filterChip} onPress={() => cycleFilter('price')}>
-            <Text style={styles.filterText}>Price: {priceOptions[priceIndex]}</Text>
-            <Ionicons name="chevron-down" size={16} color={theme.colors.textSecondary} />
-          </Pressable>
-          <Pressable style={styles.filterChip} onPress={() => cycleFilter('distance')}>
-            <Text style={styles.filterText}>Within {distanceOptions[distanceIndex]}</Text>
-            <Ionicons name="chevron-down" size={16} color={theme.colors.textSecondary} />
-          </Pressable>
+          <FilterDropdown label="Category" selected={categoryOption} options={categoryOptions} onSelect={setCategoryOption} />
+          <FilterDropdown label="Price" selected={priceOption} options={priceOptions} onSelect={setPriceOption} />
+          <FilterDropdown label="Within" selected={distanceOption} options={distanceOptions} onSelect={setDistanceOption} />
         </View>
       </View>
 
@@ -243,19 +255,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: theme.spacing.md,
     gap: theme.spacing.sm,
-  },
-  filterChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
-    borderRadius: theme.radius.pill,
-  },
-  filterText: {
-    marginRight: theme.spacing.xs,
-    color: theme.colors.textSecondary,
-    fontWeight: '600',
   },
   emptyState: {
     color: theme.colors.muted,

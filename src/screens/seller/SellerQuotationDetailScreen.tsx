@@ -28,7 +28,7 @@ export const SellerQuotationDetailScreen = ({ route }: Props) => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }}>
+      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }} variant="ocean">
         <Text style={styles.caption}>{quote.id}</Text>
         <Text style={styles.title}>Buyer: {quote.buyer}</Text>
         <Text style={styles.subtitle}>Buyer Location: {quote.location}</Text>
@@ -95,17 +95,17 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   caption: {
-    color: theme.colors.muted,
+    color: theme.colors.sellerText,
     fontWeight: '600',
   },
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
     marginTop: theme.spacing.xs,
   },
   subtitle: {
-    color: theme.colors.textSecondary,
+    color: theme.colors.sellerText,
   },
   row: {
     flexDirection: 'row',
@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
     marginVertical: theme.spacing.md,
   },
   label: {
-    color: theme.colors.muted,
+    color: theme.colors.sellerText,
     fontSize: 12,
   },
   value: {
     fontWeight: '600',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   dropdownReplacement: {
     alignSelf: 'flex-start',

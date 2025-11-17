@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { theme } from '../theme';
 import { GlassCard } from './GlassCard';
@@ -28,13 +29,22 @@ export const QuoteCard = ({ id, counterpart, product, quantity, status, location
         <Text style={styles.title} numberOfLines={1}>
           {counterpart ?? 'Counterpart TBD'}
         </Text>
-        <Text style={styles.product} numberOfLines={1}>
-          {product ?? 'Product TBD'} • Qty: {quantity ?? '—'}
-        </Text>
-        <Text style={styles.location} numberOfLines={1}>
-          {location ?? 'Location pending'}
-        </Text>
-        <Text style={styles.price}>{price ?? 'Awaiting pricing'}</Text>
+        <View style={styles.metaRow}>
+          <Ionicons name="cube-outline" size={16} color={theme.colors.textSecondary} />
+          <Text style={styles.product} numberOfLines={1}>
+            {product ?? 'Product TBD'} • Qty: {quantity ?? '—'}
+          </Text>
+        </View>
+        <View style={styles.metaRow}>
+          <Ionicons name="location-outline" size={16} color={theme.colors.textSecondary} />
+          <Text style={styles.location} numberOfLines={1}>
+            {location ?? 'Location pending'}
+          </Text>
+        </View>
+        <View style={styles.metaRow}>
+          <Ionicons name="pricetag-outline" size={16} color={theme.colors.highlight} />
+          <Text style={styles.price}>{price ?? 'Awaiting pricing'}</Text>
+        </View>
       </GlassCard>
     </Pressable>
   );
@@ -86,16 +96,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.textPrimary,
   },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+    marginTop: theme.spacing.xs,
+  },
   product: {
-    marginTop: 4,
     color: theme.colors.textSecondary,
   },
   location: {
-    marginTop: 4,
     color: theme.colors.muted,
   },
   price: {
-    marginTop: theme.spacing.sm,
     fontWeight: '700',
     color: theme.colors.textSecondary,
   },

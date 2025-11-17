@@ -16,12 +16,13 @@ export const SellerHomeScreen = () => {
             key={stat.label}
             label={stat.label}
             value={stat.value}
+            variant="ocean"
             style={{ flex: 1, marginRight: index !== sellerStats.length - 1 ? theme.spacing.md : 0 }}
           />
         ))}
       </View>
 
-      <GlassCard style={styles.card}>
+      <GlassCard style={styles.card} variant="ocean">
         <SectionHeader title="Recent Activity" actionLabel="View all" />
         {sellerActivities.map((activity) => (
           <View key={activity} style={styles.activityRow}>
@@ -61,11 +62,11 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: theme.colors.highlight,
+    backgroundColor: theme.colors.tabActive,
     marginRight: theme.spacing.sm,
   },
   activityText: {
     flex: 1,
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
 });

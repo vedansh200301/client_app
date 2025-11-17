@@ -42,7 +42,7 @@ export const SellerInventoryScreen = () => {
         <Text style={styles.emptyState}>No products configured for this location.</Text>
       ) : (
         inventory.map((item) => (
-          <GlassCard key={item.sku} style={styles.inventoryCard}>
+          <GlassCard key={item.sku} style={styles.inventoryCard} variant="ocean">
             <View style={styles.inventoryHeader}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.productName} numberOfLines={1}>
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontWeight: '600',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   meta: {
-    color: theme.colors.muted,
+    color: theme.colors.sellerText,
   },
   price: {
     fontWeight: '700',
-    color: theme.colors.textSecondary,
+    color: '#B9FBFF',
   },
   inventoryMeta: {
     flexDirection: 'row',

@@ -11,7 +11,7 @@ export const SellerLocationManagerScreen = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {locations.map((location) => (
-        <GlassCard key={location.id} style={styles.card}>
+        <GlassCard key={location.id} style={styles.card} variant="ocean">
           <View>
             <Text style={styles.title}>{location.label}</Text>
             <Text style={styles.subtitle}>{location.address}</Text>
@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '700',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   subtitle: {
-    color: theme.colors.textSecondary,
+    color: theme.colors.sellerText,
   },
   coverage: {
     marginTop: theme.spacing.xs,
-    color: theme.colors.muted,
+    color: theme.colors.sellerText,
   },
   actions: {
     flexDirection: 'row',

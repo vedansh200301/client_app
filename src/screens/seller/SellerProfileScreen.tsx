@@ -9,13 +9,13 @@ export const SellerProfileScreen = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }}>
+      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }} variant="ocean">
         <Text style={styles.title}>ABC Traders</Text>
         <Text style={styles.subtitle}>GSTIN: 22AAAA0000A1Z5</Text>
         <Text style={styles.subtitle}>Contact: +91-98XXXXXX1</Text>
       </GlassCard>
 
-      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }}>
+      <GlassCard style={styles.card} contentStyle={{ padding: theme.spacing.lg }} variant="ocean">
         <View style={styles.row}>
           <Text style={styles.sectionTitle}>Branches & Coverage</Text>
           <Pressable>
@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   subtitle: {
     marginTop: theme.spacing.xs,
-    color: theme.colors.textSecondary,
+    color: theme.colors.sellerText,
   },
   sectionTitle: {
     fontWeight: '700',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   row: {
     flexDirection: 'row',
@@ -78,13 +78,13 @@ const styles = StyleSheet.create({
   },
   locationLabel: {
     fontWeight: '600',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   locationAddress: {
-    color: theme.colors.muted,
+    color: theme.colors.sellerText,
   },
   coverage: {
     marginTop: theme.spacing.xs,
-    color: theme.colors.textSecondary,
+    color: theme.colors.sellerText,
   },
 });
