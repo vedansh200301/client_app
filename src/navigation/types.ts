@@ -14,6 +14,7 @@ export type BuyerTabParamList = {
 export type SellerTabParamList = {
   SellerHome: undefined;
   SellerQuotations: undefined;
+  SellerMessages: undefined;
   SellerInventory: undefined;
   SellerProfile: undefined;
   SellerLocations: undefined;
@@ -29,4 +30,5 @@ export type BuyerStackParamList = {
 export type SellerStackParamList = {
   SellerTabs: undefined;
   SellerQuotationDetail: { quotationId: string } | undefined;
+  SellerChat: { quotationId: string };
 };

@@ -18,6 +18,8 @@ import { SellerLocationManagerScreen } from '../screens/seller/SellerLocationMan
 import { SellerProfileScreen } from '../screens/seller/SellerProfileScreen';
 import { SellerQuotationDetailScreen } from '../screens/seller/SellerQuotationDetailScreen';
 import { SellerQuotationsScreen } from '../screens/seller/SellerQuotationsScreen';
+import { SellerMessagesScreen } from '../screens/seller/SellerMessagesScreen';
+import { SellerChatScreen } from '../screens/seller/SellerChatScreen';
 import {
   BuyerStackParamList,
   BuyerTabParamList,
@@ -51,6 +53,7 @@ const iconMap: Record<string, keyof typeof Ionicons.glyphMap> = {
   BuyerProfile: 'person-circle',
   SellerHome: 'speedometer',
   SellerQuotations: 'chatbox',
+  SellerMessages: 'chatbubbles',
   SellerInventory: 'cube',
   SellerProfile: 'business',
   SellerLocations: 'navigate-circle',
@@ -114,6 +117,11 @@ const SellerTabsNavigator = () => (
       options={{ title: 'Quotations' }}
     />
     <SellerTab.Screen
+      name="SellerMessages"
+      component={SellerMessagesScreen}
+      options={{ title: 'Chats' }}
+    />
+    <SellerTab.Screen
       name="SellerInventory"
       component={SellerInventoryScreen}
       options={{ title: 'Inventory' }}
@@ -148,6 +156,7 @@ const SellerStackNavigator = () => (
       component={SellerQuotationDetailScreen}
       options={{ title: 'Quotation' }}
     />
+    <SellerStack.Screen name="SellerChat" component={SellerChatScreen} options={{ title: 'Chat' }} />
   </SellerStack.Navigator>
 );
 

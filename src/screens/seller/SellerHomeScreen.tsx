@@ -1,25 +1,41 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
+import { ScrollView, StyleSheet, View, Text, Pressable } from 'react-native';
 import { GlassCard } from '../../components/GlassCard';
 import { SectionHeader } from '../../components/SectionHeader';
 import { StatCard } from '../../components/StatCard';
-import { sellerActivities, sellerStats, sellerNotifications } from '../../data/mockData';
+import { sellerActivities, sellerStats } from '../../data/mockData';
+import { SellerTabParamList } from '../../navigation/types';
 import { theme } from '../../theme';
+import { chatStore } from '../../store/chatStore';
+
+type Navigation = NavigationProp<SellerTabParamList>;
 
 export const SellerHomeScreen = () => {
+  const navigation = useNavigation<Navigation>();
+  const [unreadChats, setUnreadChats] = useState(chatStore.getSellerUnreadCount());
+
+  useFocusEffect(
+    useCallback(() => {
+      const unsubscribe = chatStore.subscribe(() => setUnreadChats(chatStore.getSellerUnreadCount()));
+      setUnreadChats(chatStore.getSellerUnreadCount());
+      return unsubscribe;
+    }, []),
+  );
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <SectionHeader title="Overview" />
       <View style={styles.notificationRow}>
-        <View style={styles.notificationBadge}>
+        <Pressable style={styles.notificationBadge} onPress={() => navigation.navigate('SellerMessages')}>
           <Ionicons name="notifications-outline" size={18} color={theme.colors.surface} />
-          <Text style={styles.notificationText}>{sellerNotifications.unreadAlerts} Alerts</Text>
-        </View>
-        <View style={styles.notificationBadge}>
+          <Text style={styles.notificationText}>Alerts</Text>
+        </Pressable>
+        <Pressable style={styles.notificationBadge} onPress={() => navigation.navigate('SellerMessages')}>
           <Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.colors.surface} />
-          <Text style={styles.notificationText}>{sellerNotifications.unreadChats} Chats</Text>
-        </View>
+          <Text style={styles.notificationText}>{unreadChats} Chats</Text>
+        </Pressable>
       </View>
       <View style={styles.statsRow}>
         {sellerStats.map((stat, index) => (

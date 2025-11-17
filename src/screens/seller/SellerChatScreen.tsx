@@ -5,11 +5,11 @@ import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { GlassButton } from '../../components/GlassButton';
 import { GlassCard } from '../../components/GlassCard';
-import { BuyerStackParamList } from '../../navigation/types';
+import { SellerStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { chatStore, ChatThread } from '../../store/chatStore';
 
-type Props = NativeStackScreenProps<BuyerStackParamList, 'BuyerChat'>;
+type Props = NativeStackScreenProps<SellerStackParamList, 'SellerChat'>;
 
 const formatTime = (timestamp: number) => {
   const diff = Date.now() - timestamp;
@@ -22,45 +22,45 @@ const formatTime = (timestamp: number) => {
   return `${days}d ago`;
 };
 
-export const BuyerChatScreen = ({ route }: Props) => {
-  const { threadId } = route.params;
-  const [thread, setThread] = useState<ChatThread | undefined>(chatStore.getThread(threadId));
-  const [messageText, setMessageText] = useState('');
+export const SellerChatScreen = ({ route }: Props) => {
+  const { quotationId } = route.params;
+  const [thread, setThread] = useState<ChatThread | undefined>(chatStore.getThread(quotationId));
+  const [input, setInput] = useState('');
   const scrollRef = useRef<ScrollView>(null);
 
   useFocusEffect(
     useCallback(() => {
-      chatStore.markRead(threadId, 'buyer');
+      chatStore.markRead(quotationId, 'seller');
       const unsubscribe = chatStore.subscribe(() => {
-        setThread(chatStore.getThread(threadId));
+        setThread(chatStore.getThread(quotationId));
         scrollRef.current?.scrollToEnd({ animated: true });
       });
-      setThread(chatStore.getThread(threadId));
+      setThread(chatStore.getThread(quotationId));
       return unsubscribe;
-    }, [threadId]),
+    }, [quotationId]),
   );
 
   if (!thread) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>Conversation not found.</Text>
+        <Text style={styles.emptyText}>Conversation unavailable.</Text>
       </View>
     );
   }
 
   const handleSend = () => {
-    if (!messageText.trim()) return;
-    chatStore.sendMessage(threadId, 'buyer', messageText.trim());
-    setMessageText('');
+    if (!input.trim()) return;
+    chatStore.sendMessage(quotationId, 'seller', input.trim());
+    setInput('');
     scrollRef.current?.scrollToEnd({ animated: true });
   };
 
   return (
     <View style={styles.container}>
-      <GlassCard style={styles.headerCard}>
-        <Text style={styles.title}>{thread.sellerName}</Text>
+      <GlassCard variant="ocean" style={styles.headerCard}>
+        <Text style={styles.title}>{thread.buyerName}</Text>
         <View style={styles.headerMeta}>
-          <Ionicons name="chatbubble-ellipses-outline" size={16} color={theme.colors.textSecondary} />
+          <Ionicons name="chatbubble-outline" size={16} color={theme.colors.sellerText} />
           <Text style={styles.metaText}>{thread.messages.length} messages</Text>
         </View>
       </GlassCard>
@@ -68,7 +68,7 @@ export const BuyerChatScreen = ({ route }: Props) => {
         {thread.messages.map((message) => (
           <View
             key={message.id}
-            style={[styles.bubble, message.sender === 'buyer' ? styles.buyerBubble : styles.sellerBubble]}
+            style={[styles.bubble, message.sender === 'seller' ? styles.sellerBubble : styles.buyerBubble]}
           >
             <Text style={styles.bubbleText}>{message.text}</Text>
             <Text style={styles.bubbleTime}>{formatTime(message.timestamp)}</Text>
@@ -78,13 +78,13 @@ export const BuyerChatScreen = ({ route }: Props) => {
       <GlassCard style={styles.inputCard}>
         <View style={styles.inputRow}>
           <TextInput
-            placeholder="Type a message"
+            placeholder="Respond to buyer"
             placeholderTextColor={theme.colors.muted}
             style={styles.input}
-            value={messageText}
-            onChangeText={setMessageText}
+            value={input}
+            onChangeText={setInput}
           />
-          <GlassButton label="Send" style={styles.sendButton} onPress={handleSend} disabled={!messageText.trim()} />
+          <GlassButton label="Send" onPress={handleSend} style={styles.sendButton} disabled={!input.trim()} />
         </View>
       </GlassCard>
     </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: theme.colors.textPrimary,
+    color: theme.colors.sellerText,
   },
   headerMeta: {
     flexDirection: 'row',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.xs,
   },
   metaText: {
-    color: theme.colors.textSecondary,
+    color: theme.colors.sellerText,
   },
   chatArea: {
     flex: 1,
@@ -127,11 +127,11 @@ const styles = StyleSheet.create({
     padding: theme.spacing.sm,
     borderRadius: theme.radius.md,
   },
-  buyerBubble: {
+  sellerBubble: {
     alignSelf: 'flex-end',
     backgroundColor: theme.colors.highlight,
   },
-  sellerBubble: {
+  buyerBubble: {
     alignSelf: 'flex-start',
     backgroundColor: theme.colors.chipBackground,
   },

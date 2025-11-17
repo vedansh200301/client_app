@@ -1,33 +1,27 @@
 import { Ionicons } from '@expo/vector-icons';
-import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { GlassCard } from '../../components/GlassCard';
-import { BuyerStackParamList } from '../../navigation/types';
+import { SellerStackParamList, SellerTabParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { chatStore, ChatThread } from '../../store/chatStore';
 
-type Navigation = NavigationProp<BuyerStackParamList>;
+type Navigation = CompositeNavigationProp<
+  BottomTabNavigationProp<SellerTabParamList, 'SellerMessages'>,
+  NativeStackNavigationProp<SellerStackParamList>
+>;
 
-const formatTime = (timestamp: number) => {
-  const diff = Date.now() - timestamp;
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return 'Just now';
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
-};
-
-export const BuyerMessagesScreen = () => {
+export const SellerMessagesScreen = () => {
   const navigation = useNavigation<Navigation>();
-  const [threads, setThreads] = useState<ChatThread[]>(chatStore.getBuyerThreads());
+  const [threads, setThreads] = useState<ChatThread[]>(chatStore.getSellerThreads());
 
   useFocusEffect(
     useCallback(() => {
-      const unsubscribe = chatStore.subscribe(() => setThreads(chatStore.getBuyerThreads()));
-      setThreads(chatStore.getBuyerThreads());
+      const unsubscribe = chatStore.subscribe(() => setThreads(chatStore.getSellerThreads()));
+      setThreads(chatStore.getSellerThreads());
       return unsubscribe;
     }, []),
   );
@@ -35,29 +29,25 @@ export const BuyerMessagesScreen = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {threads.map((thread) => (
-        <Pressable key={thread.id} onPress={() => navigation.navigate('BuyerChat', { threadId: thread.id })}>
-          <GlassCard style={styles.card}>
+        <Pressable key={thread.id} onPress={() => navigation.navigate('SellerChat', { quotationId: thread.id })}>
+          <GlassCard style={styles.card} variant="ocean">
             <View style={styles.headerRow}>
               <View style={styles.titleRow}>
-                <Ionicons name="business-outline" size={16} color={theme.colors.textSecondary} />
+                <Ionicons name="person-circle-outline" size={16} color={theme.colors.sellerText} />
                 <Text style={styles.title} numberOfLines={1}>
-                  {thread.sellerName}
+                  {thread.buyerName}
                 </Text>
               </View>
-              {thread.buyerUnread ? (
+              {thread.sellerUnread ? (
                 <View style={styles.unreadBadge}>
                   <Ionicons name="chatbubble-ellipses" size={14} color={theme.colors.surface} />
-                  <Text style={styles.unreadText}>{thread.buyerUnread}</Text>
+                  <Text style={styles.unreadText}>{thread.sellerUnread}</Text>
                 </View>
               ) : null}
             </View>
             <Text style={styles.message} numberOfLines={2}>
               {thread.lastMessage}
             </Text>
-            <View style={styles.timeRow}>
-              <Ionicons name="time-outline" size={14} color={theme.colors.muted} />
-              <Text style={styles.timestamp}>{formatTime(thread.lastTimestamp)}</Text>
-            </View>
           </GlassCard>
         </Pressable>
       ))}
@@ -90,21 +80,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '700',
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.xs,
+    color: theme.colors.sellerText,
   },
   message: {
-    color: theme.colors.textSecondary,
-  },
-  timeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.spacing.xs,
+    color: theme.colors.sellerText,
     marginTop: theme.spacing.xs,
-  },
-  timestamp: {
-    color: theme.colors.muted,
-    fontSize: 12,
   },
   unreadBadge: {
     flexDirection: 'row',

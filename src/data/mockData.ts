@@ -172,35 +172,34 @@ export const buyerQuotations = [
   },
 ];
 
+const now = Date.now();
+
 export const buyerMessages = [
   {
     id: 'thread-abc',
     seller: 'ABC Traders',
+    buyerName: 'Vedansh',
     lastMessage: 'Delivery possible by Monday. Confirm?',
-    timestamp: '2m ago',
     unreadCount: 2,
+    sellerUnread: 0,
     messages: [
-      { id: 'm1', sender: 'seller', text: 'Delivery possible by Monday. Confirm?', time: '2m ago' },
-      { id: 'm2', sender: 'buyer', text: 'Need it by 10 AM, please confirm driver details.', time: 'Just now' },
+      { id: 'm1', sender: 'seller', text: 'Delivery possible by Monday. Confirm?', timestamp: now - 120000 },
+      { id: 'm2', sender: 'buyer', text: 'Need it by 10 AM, please confirm driver details.', timestamp: now - 20000 },
     ],
   },
   {
     id: 'thread-metro',
     seller: 'Metro Steel Depot',
+    buyerName: 'Vedansh',
     lastMessage: 'Sharing updated TMT rate card.',
-    timestamp: '30m ago',
     unreadCount: 0,
+    sellerUnread: 1,
     messages: [
-      { id: 'm1', sender: 'seller', text: 'Sharing updated TMT rate card.', time: '30m ago' },
-      { id: 'm2', sender: 'buyer', text: 'Received. Will review with procurement.', time: '25m ago' },
+      { id: 'm1', sender: 'seller', text: 'Sharing updated TMT rate card.', timestamp: now - 1800000 },
+      { id: 'm2', sender: 'buyer', text: 'Received. Will review with procurement.', timestamp: now - 1500000 },
     ],
   },
 ];
-
-export const sellerNotifications = {
-  unreadChats: 3,
-  unreadAlerts: 4,
-};
 
 export const sellerStats = [
   { label: 'New Quotations Today', value: '03' },
